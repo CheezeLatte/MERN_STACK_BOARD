@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const schema = new Schema({
-  email: {
+  id: {
     type: String,
     required: true,
     unique: true,
@@ -11,7 +11,7 @@ const schema = new Schema({
   hashedPassword: String,
   role: {
     type: String,
-    enum: ['admin', 'User'],
+    enum: ['Admin', 'User'],
     default: 'User'
   },
   name: String,

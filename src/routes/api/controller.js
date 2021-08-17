@@ -10,7 +10,7 @@ exports.findUsers = asyncHandler(async (req, res) => {
   const _limit = +(limit || 10);
   const skip = (page - 1) * limit;
 
-  const total = await User.countDocuments({ role: 'worker' });
+  const total = await User.countDocuments({ role: 'User' });
   const documents = await User.find({}).skip(skip).limit(_limit);
 
   res.json({ total, page: _page, limit: _limit, data: documents })

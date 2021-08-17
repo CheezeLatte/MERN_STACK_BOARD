@@ -4,9 +4,9 @@ const { User, RefreshToken } = require('../../models');
 const { signAccessToken, signRefreshToken, verifyRefreshToken } = require('../../utils/jwt');
 
 exports.login = asyncHandler(async (req, res) => {
-  const { body: { email, password } } = req;
+  const { body: { id, password } } = req;
 
-  const exUser = await User.findOne({ email });
+  const exUser = await User.findOne({ id:id });
   if (!exUser) throw createError(404, 'User Not Found');
   if (exUser.withdrawn) throw createError(403, 'Forbidden');
   if (!exUser.authenticate(password)) throw createError(400, 'Invalid Password');
@@ -55,15 +55,15 @@ exports.refreshToken = asyncHandler(async (req, res) => {
 
   await RefreshToken.updateToken(id, refreshToken, oldToken);
 
-  res.json({success: true, status: 200, message: 'Token Refresed', data: {accessToken, refreshToken}});
+  res.json({success: true, status: 200, message: 'Token Refreshed', data: {accessToken, refreshToken}});
 });
 
 exports.register = asyncHandler(async (req, res) => {
   const { body } = req;
   body.role = 'User';
-  const dupleCheck = await User.findOne({email:body.email})
+  const dupleCheck = await User.findOne({id:body.id})
   if(dupleCheck) {
-    res.json({ success: true, status: 200, message: `${body.email} Already In Use`})
+    res.json({ success: true, status: 200, message: `${body.id} ID Already In Use`})
   } else {
     User.create(body);
     res.json({ success: true, status: 200, message: 'User Registerd' });

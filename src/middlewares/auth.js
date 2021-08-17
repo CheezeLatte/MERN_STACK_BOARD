@@ -17,5 +17,5 @@ exports.requireLoggedIn = requireLoggedIn;
 
 exports.isAdmin = [
   requireLoggedIn,
-  (req, res, next) => req.user.role === 'admin' ? next() : next(createError(403, 'forbidden'))
+  (req, res, next) => req.user.role === 'Admin' ? next() : next(createError(403, 'forbidden'))
 ];
