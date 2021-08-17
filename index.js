@@ -17,6 +17,6 @@ async function init() {
     ADMIN_NAME: name = '관리자'
   } = process.env;
 
-  const exAdmin = await User.findOne({ id });
+  const exAdmin = await User.findOne({ id:id });
   if (!exAdmin) await User.create({ id, password, name, role: 'Admin' });
 }
