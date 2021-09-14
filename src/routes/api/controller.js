@@ -60,6 +60,15 @@ exports.getPosts = asyncHandler( async(req, res) => {
   res.json({ total, page: _page, limit: _limit, data: documents });
 });
 
+exports.getMyPosts = asyncHandler( async(req, res) =>{
+  const { user } = req;
+  const userId = await User.findById(user._id).select(-'hashedPassword');
+
+  const documents = await db.Post.find({ writer: userId._id});
+
+  res.json({ success: true, status: 200, message:`User ${userId.id}'s documents`, data: documents})
+});
+
 exports.getPost = asyncHandler(async(req, res)=>{
   const { params: {id} } = req;
   const document = await db.Post.findOne({id:id})
