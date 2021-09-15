@@ -7,6 +7,7 @@ exports.login = asyncHandler(async (req, res) => {
   const { body: { id, password } } = req;
 
   const exUser = await User.findOne({ id:id });
+  const name = exUser.name;
   if (!exUser) throw createError(404, 'User Not Found');
   if (exUser.withdrawn) throw createError(403, 'Forbidden');
   if (!exUser.authenticate(password)) throw createError(400, 'Invalid Password');
@@ -16,7 +17,7 @@ exports.login = asyncHandler(async (req, res) => {
   ]);
 
   await RefreshToken.updateToken(exUser._id, refreshToken);
-  res.json({ success: true, status:200, message: 'LogIn Success', data: {accessToken, refreshToken}});
+  res.json({ success: true, status:200, message: 'LogIn Success', data: {accessToken, refreshToken, name: name}});
 });
 
 exports.logout = asyncHandler(async (req, res) => {
