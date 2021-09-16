@@ -1,5 +1,5 @@
 # Board-Front-End-By-React
-## Update Js To Typescipt
+## Update Js To Typescript
 
 - [x] SignUp
 - [x] Logging System by redux
